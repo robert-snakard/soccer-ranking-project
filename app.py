@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import re
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
 class App:
     
@@ -24,5 +24,15 @@ class App:
             self.team_scores[results["teama"]] += 1;
             self.team_scores[results["teamb"]] += 1;
 
+    def get_rankings(self):
+        Team = namedtuple('Team', ['score', 'name'])
+        return sorted([Team(v, k) for (k, v) in self.team_scores.items()],
+                          key=team_to_string)
+
     def run():
         print("Hello World")
+
+# helper function
+def team_to_string(team):
+    # have to sort by negative score because 5 > 1 but a < z. This way -5 < 1 and a < z. 
+    return (-team.score, team.name)
