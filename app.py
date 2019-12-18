@@ -18,8 +18,10 @@ class App:
         results = match.groupdict()
         if int(results["scorea"]) > int(results["scoreb"]):
             self.team_scores[results["teama"]] += 3;
+            self.team_scores[results["teamb"]] += 0;
         elif int(results["scorea"]) < int(results["scoreb"]):
             self.team_scores[results["teamb"]] += 3;
+            self.team_scores[results["teama"]] += 0;
         else:
             self.team_scores[results["teama"]] += 1;
             self.team_scores[results["teamb"]] += 1;
