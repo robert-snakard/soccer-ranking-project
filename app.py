@@ -4,7 +4,7 @@ import re
 
 class App:
     
-    pattern = re.compile(r"(.*) (\d+), (.*) (\d+)")
+    pattern = re.compile(r"(?P<teama>.*) (?P<scorea>\d+), (?P<teamb>.*) (?P<scoreb>\d+)")
 
     def __init__(self):
         self.team_scores = {}
@@ -13,7 +13,7 @@ class App:
         match = self.pattern.match(score)
         if not match:
             raise InvalidScore
-        print(match.groups())
+        print(match.groupdict())
 
     def run():
         print("Hello World")
