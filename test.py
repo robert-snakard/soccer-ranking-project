@@ -16,8 +16,8 @@ def test_ranking(team_scores, expected_rankings):
     app = App()
     app.team_scores = team_scores
     rankings = app.get_rankings()
-    for idx, name in enumerate(rankings):
-        assert expected_rankings[idx] == name
+    for idx, team in enumerate(rankings):
+        assert expected_rankings[idx] == team.name
     return "success"
 
 # expected output should be the expected std output
@@ -67,4 +67,20 @@ print("Testing two games: three teams -", test_insert(['a 5, b 3', 'b 1, c 4'], 
 print("Testing two games: two teams -", test_insert(['a 5, b 3', 'a 1, b 4'], {'a': 3, 'b': 3}))
 print("")
 print("Testing three games -", test_insert(['a 5, b 3', 'a 1, b 4', 'a 2, c 2'], {'a': 4, 'b': 3, 'c': 1}))
+print("")
+print("Test ranking no teams -", test_ranking({}, []))
+print("Test ranking one team -", test_ranking({'a': 3}, ['a']))
+print("Test ranking two teams -", test_ranking({'a': 3, 'b': 0}, ['a', 'b']))
+print("Test ranking six teams -", test_ranking({'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5}, ['f', 'e', 'd', 'c', 'b', 'a']))
+print("")
+print("Test ranking with tie -", test_ranking({'a': 3, 'b': 3}, ['a', 'b']))
+print("Test ranking with tie swap -", test_ranking({'b': 3, 'a': 3}, ['a', 'b']))
+print("Test ranking with tie and matching names -", test_ranking({'a': 3, 'aa': 3}, ['a', 'aa']))
+print("")
+print("Test print empty input -", test_print([], ""))
+print("Test print one game -", test_print(['a 3, b 2'], "1. a, 3 pts\n2. b, 0 pts\n"))
+print("Test print with tie -", test_print(['a 3, b 3', 'a 3, b 3'], "1. a, 2 pts\n1. b, 2 pts\n"))
+print("Test print with one point -", test_print(['a 3, b 3'], "1. a, 1 pt\n1. b, 1 pt\n"))
+print("")
+print("Test run -", test_run(open('sample_input.txt', 'r'), open('expected_output.txt', 'r').read()))
 print("")
