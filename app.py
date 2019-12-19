@@ -31,8 +31,22 @@ class App:
         return sorted([Team(v, k) for (k, v) in self.team_scores.items()],
                           key=team_to_string)
 
-    def run():
-        print("Hello World")
+    def print_rankings(self):
+        place = None
+        old_score = None
+        rankings = self.get_rankings()
+
+        for count,team in enumerate(rankings):
+            if team.score != old_score: # account for ties
+                place = count+1 # because count starts at 0
+
+            print("{}. {}, {} {}".format(place, team.name, team.score, 'pt' if team.score == 1 else 'pts'))
+            old_score = team.score
+
+    def run(self, file):
+        for line in file:
+            self.add_game(line)
+        self.print_rankings()
 
 # helper function
 def team_to_string(team):
